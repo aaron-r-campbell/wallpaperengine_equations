@@ -1,0 +1,37 @@
+:root {
+    --background_color: #FFFFFFFF;
+    --canvas_color: #FFFFFFFF;
+    --shadow_color: #00000011;
+    --font_color: #000000FF;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--background_color);
+}
+
+#content_wrapper {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+#main_canvas {
+    background-color: var(--canvas_color);
+}
+
+#title {
+    margin-right: 0.618rem;
+    font-size: 1.1rem;
+    color: var(--font_color);
+}
+
+/* Fixing MathJax */
+mjx-container {
+    margin-right: 0;
+    text-align: right;
+}
