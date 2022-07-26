@@ -1,9 +1,10 @@
 // Constants
 let phi = (1 + Math.sqrt(5)) / 2;
 let scale = 2;
-let r = phi;
 
 // Helper functions
+let range = (n) => Array(n).fill().map((x, i) => i);
+
 let gamma = (n) => {
     let g = 7,
         p = [0.99999999999980993, 676.5203681218851, -1259.1392167224028, 771.32342877765313, -176.61502916214059, 12.507343278686905, -0.13857109526572012, 9.9843695780195716e-6, 1.5056327351493116e-7];
@@ -31,13 +32,11 @@ let fillPixel = (context, x, y, color) => {
     context.save();
     context.beginPath();
     context.fillStyle = color;
-    // context.arc(x+0.5-r/2, y+0.5-r/2, r/2, 0, 2 * Math.PI);
-    // context.fill();
-    context.fillRect(x + 0.5 - r / 2, y + 0.5 - r / 2, r, r);
+    context.fillRect(x + 0.5 - phi / 2, y + 0.5 - phi / 2, phi, phi);
     context.restore();
 }
 
-let calculate_equation = (canvas, context, { eq1 = (x, y) => x, eq2 = (x, y) => y, dims = [-1, -1, 1, 1], stroke_color = 'black', inequality = false } = {}) => {
+let calculate_equation = async (canvas, context, { eq1 = (x, y) => x, eq2 = (x, y) => y, dims = [-1, -1, 1, 1], stroke_color = 'black', inequality = false } = {}) => {
     // Define number of horizontal and vertical samples to use
     let x_samples = canvas.width * scale,
         y_samples = canvas.height * scale;
@@ -54,49 +53,66 @@ let calculate_equation = (canvas, context, { eq1 = (x, y) => x, eq2 = (x, y) => 
         points = [];
 
     // Calculate boundary values
-    for (let i = 0; i < (x_samples + 1) * (y_samples + 1); i++) {
-        let x = xmin + (i % x_samples) * pixel_width_x,
-            y = ymin + (Math.floor(i / x_samples)) * pixel_width_y;
-        points.push((eq1(x, y) - eq2(x, y)));
-    }
+    async.each(
+        range((x_samples + 1) * (y_samples + 1)),
+        (point_index) => {
+            let x = xmin + (point_index % x_samples) * pixel_width_x,
+                y = ymin + (Math.floor(point_index / x_samples)) * pixel_width_y;
+            points.push(eq1(x, y) - eq2(x, y));
+        },
+    );
 
     // Calculate pixel values
-    for (let i = 0; i < x_samples * y_samples; i++) {
-        let p0 = points[i],
-            p1 = points[i + 1],
-            p2 = points[(x_samples + 1) + i],
-            p3 = points[(x_samples + 1) + i + 1];
+    async.each(
+        range(x_samples * y_samples),
+        (pixel_index) => {
+            let p0 = points[pixel_index],
+                p1 = points[pixel_index + 1],
+                p2 = points[(x_samples + 1) + pixel_index],
+                p3 = points[(x_samples + 1) + pixel_index + 1];
 
-        // get value 0-1
-        pixels.push([i, [p0, p1, p2, p3].filter(x => x >= 0).length]);
-    }
+            // get value 0-1
+            let c = [p0, p1, p2, p3].filter(x => x >= 0).length;
+            if (c != 0 && c != 4) pixels.push([pixel_index, c]);
+        },
+    );
 
     return {
         pixels: pixels,
         x_samples: x_samples,
+        scale: scale,
         inequality,
     };
-}
+};
 
-let draw_pixels = (canvas, context, { pixels, x_samples, inequality = false }, { stroke_color = 'black' } = {}) => {
+let draw_pixels = (canvas, context, { pixels, scale, x_samples, inequality = false }, { stroke_color = 'black' } = {}) => {
     // Save the context
     context.save();
 
     // Reflect the y axis and scale the content
     context.translate(0, canvas.height);
-    context.scale(1 / scale, -1 / scale)
+    context.scale(1 / scale, -1 / scale);
+
+    // Help with upscaling when resizing to larger canvas
+    let resize_scale = canvas.width * scale / x_samples;
 
     // Draw pixels
-    for (let i = 0; i < pixels.length; i++) {
-        let [j, v] = pixels[i];
-        if (inequality && v > 0) fillPixel(context, j % x_samples, Math.floor(j / x_samples), stroke_color)
-        else if (!inequality && v == 2) fillPixel(context, j % x_samples, Math.floor(j / x_samples), stroke_color)
-        else if (!inequality && v == 1 || v == 3) fillPixel(context, j % x_samples, Math.floor(j / x_samples), '#000000CC');
-    }
+    async.each(
+        range(pixels.length * resize_scale * resize_scale),
+        (i) => {
+            let pixel_index = Math.floor(i / resize_scale / resize_scale)
+            let [n, v] = pixels[pixel_index],
+                x = n % (x_samples * resize_scale),
+                y = Math.floor(n / x_samples * resize_scale);
+            if (inequality && v > 0) fillPixel(context, x, y, stroke_color)
+            else if (!inequality && v == 2) fillPixel(context, x, y, stroke_color)
+            else if (!inequality && v == 1 || v == 3) fillPixel(context, x, y, '#000000CC');
+        },
+    );
 
     // Restore the context
     context.restore();
-}
+};
 
 // Math graphs
 let equations = [

@@ -28,11 +28,11 @@ let recoverHistory = () => {
     equation_queue.push(history.pop());
 }
 
-let drawFunction = () => {
+let drawFunction = async () => {
     clearContent(main_canvas, main_canvas_context, canvas_title);
     resizeCanvas(main_canvas, canvas_orientation);
     // Draw the new function
-    draw_pixels(main_canvas, main_canvas_context, equation_queue[equation_queue.length - 1](main_canvas, main_canvas_context, canvas_title));
+    draw_pixels(main_canvas, main_canvas_context, await equation_queue[equation_queue.length - 1](main_canvas, main_canvas_context, canvas_title));
 }
 
 let drawNewFunction = () => {
