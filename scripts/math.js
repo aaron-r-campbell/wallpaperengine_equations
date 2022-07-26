@@ -1038,5 +1038,745 @@ let equations = [
             },
             dims,
         );
-    }
+    },
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('|y|=sin|x|+log^2|x|', title, {
+            throwOnError: false
+        });
+        let dims = [-40, -20, 40, 20]
+        drawEquationComplex(
+            canvas,
+            context,
+            (x, y) => {
+                return Math.abs(y);
+            },
+            (x, y) => {
+                return Math.sin(Math.abs(x)) + Math.pow(Math.log(Math.abs(x)), 2);
+            },
+            dims,
+        );
+    },
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('x^2+y^2=2^x+2^y', title, {
+            throwOnError: false
+        });
+        let dims = [-20, -10, 20, 10]
+        drawEquationComplex(
+            canvas,
+            context,
+            (x, y) => {
+                return Math.pow(x, 2) + Math.pow(y, 2);
+            },
+            (x, y) => {
+                return Math.pow(2, x) + Math.pow(2, y);
+            },
+            dims,
+        );
+    },
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('x^4+y^4>4^x+4^y', title, {
+            throwOnError: false
+        });
+        let dims = [-20, -10, 20, 10]
+        drawEquationInequality(
+            canvas,
+            context,
+            (x, y) => {
+                return Math.pow(x, 4) + Math.pow(y, 4);
+            },
+            (x, y) => {
+                return Math.pow(4, x) + Math.pow(4, y);
+            },
+            dims,
+        );
+    },
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('x^2+y^2=\\frac{1}{2}^y+cos^2(y)', title, {
+            throwOnError: false
+        });
+        let dims = [-10, -10, 10, 5]
+        drawEquationComplex(
+            canvas,
+            context,
+            (x, y) => {
+                return Math.pow(x, 2) + Math.pow(y, 2);
+            },
+            (x, y) => {
+                return Math.pow(1 / 2, y) + Math.pow(Math.cos(y), 2);
+            },
+            dims,
+        );
+    },
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('\\log(x,y)=sin(xy)', title, {
+            throwOnError: false
+        });
+        let dims = [0, 0, 100, 100]
+        drawEquationComplex(
+            canvas,
+            context,
+            (x, y) => {
+                return Math.log(y) / Math.log(x);
+            },
+            (x, y) => {
+                return Math.sin(x * y);
+            },
+            dims,
+        );
+    },
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('x^y=cos(xy)', title, {
+            throwOnError: false
+        });
+        let dims = [-100, -100, 100, 100]
+        drawEquationComplex(
+            canvas,
+            context,
+            (x, y) => {
+                return Math.pow(x, y);
+            },
+            (x, y) => {
+                return Math.cos(x * y);
+            },
+            dims,
+        );
+    },
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('xcos(y)=ycos(x)', title, {
+            throwOnError: false
+        });
+        let dims = [-40, -40, 40, 40]
+        drawEquationComplex(
+            canvas,
+            context,
+            (x, y) => {
+                return x * Math.cos(y);
+            },
+            (x, y) => {
+                return y * Math.cos(x);
+            },
+            dims,
+        );
+    },
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('y=tan(xy)', title, {
+            throwOnError: false
+        });
+        let dims = [-40, -40, 40, 40]
+        drawEquationComplex(
+            canvas,
+            context,
+            (x, y) => {
+                return y;
+            },
+            (x, y) => {
+                return Math.tan(x * y);
+            },
+            dims,
+        );
+    },
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('y=tan(xy)', title, {
+            throwOnError: false
+        });
+        let dims = [-10, -10, 10, 10]
+        drawEquationComplex(
+            canvas,
+            context,
+            (x, y) => {
+                return y;
+            },
+            (x, y) => {
+                return Math.tan(x * y);
+            },
+            dims,
+        );
+    },
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('tan(x^2)+tan(2^y)=1', title, {
+            throwOnError: false
+        });
+        let dims = [-10, -10, 10, 10]
+        drawEquationComplex(
+            canvas,
+            context,
+            (x, y) => {
+                return Math.tan(Math.pow(x, 2)) + Math.tan(Math.pow(2, y));
+            },
+            (x, y) => {
+                return 1;
+            },
+            dims,
+        );
+    },
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('\\frac{1}{x}+\\frac{1}{y}=sin(e^{-xy})', title, {
+            throwOnError: false
+        });
+        let dims = [-20, -20, 20, 20]
+        drawEquationComplex(
+            canvas,
+            context,
+            (x, y) => {
+                return 1 / x + 1 / y;
+            },
+            (x, y) => {
+                return Math.sin(Math.pow(Math.E, -x * y));
+            },
+            dims,
+        );
+    },
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('cos(x\\oplus y)+sin(x)=1', title, {
+            throwOnError: false
+        });
+        let dims = [-20, -20, 20, 20]
+        drawEquationComplex(
+            canvas,
+            context,
+            (x, y) => {
+                return Math.cos(x ^ y) + Math.sin(x);
+            },
+            (x, y) => {
+                return 1;
+            },
+            dims,
+        );
+    },
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('cos(x^y)+sin(x)=1', title, {
+            throwOnError: false
+        });
+        let dims = [0, -1, 20, 20]
+        drawEquationComplex(
+            canvas,
+            context,
+            (x, y) => {
+                return Math.cos(Math.pow(x, y)) + Math.sin(x);
+            },
+            (x, y) => {
+                return 1;
+            },
+            dims,
+        );
+    },
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('log(x^y)+log(x^{cos(2y)})=tan(3x)+sin(y^{log(x)})', title, {
+            throwOnError: false
+        });
+        let dims = [0, -1, 20, 20]
+        drawEquationComplex(
+            canvas,
+            context,
+            (x, y) => {
+                return (Math.log(Math.pow(x, y)) + Math.log(Math.pow(x, Math.cos(2 * y)))) / Math.log(10);
+            },
+            (x, y) => {
+                return Math.tan(3 * x) + Math.sin(Math.pow(y, Math.log(x) / Math.log(10)));
+            },
+            dims,
+        );
+    },
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('7^x+y^{2x}=tan(xy)', title, {
+            throwOnError: false
+        });
+        let dims = [-20, -0, 10, 20]
+        drawEquationComplex(
+            canvas,
+            context,
+            (x, y) => {
+                return Math.pow(7, x) + Math.pow(y, 2 * x);
+            },
+            (x, y) => {
+                return Math.tan(x * y);
+            },
+            dims,
+        );
+    },
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('7^x+y^{2x}=cos(xy)', title, {
+            throwOnError: false
+        });
+        let dims = [-20, 0, 0, 10]
+        drawEquationComplex(
+            canvas,
+            context,
+            (x, y) => {
+                return Math.pow(7, x) + Math.pow(y, 2 * x);
+            },
+            (x, y) => {
+                return Math.tan(x * y);
+            },
+            dims,
+        );
+    },
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('|sin(y)|=|log|x-y||', title, {
+            throwOnError: false
+        });
+        let dims = [-50, -50, 50, 50]
+        drawEquationComplex(
+            canvas,
+            context,
+            (x, y) => {
+                return Math.abs(Math.sin(y));
+            },
+            (x, y) => {
+                return Math.abs(Math.log10(Math.abs(x - y)));
+            },
+            dims,
+        );
+    },
+    (canvas, context, title, color, radius = 0.5) => {
+        let yr = new Date().getFullYear() / 100;
+        katex.render('x^2+y^2=' + yr + '(1+sin(xy))^2', title, {
+            throwOnError: false
+        });
+        let dims = [-10, -10, 10, 10]
+        drawEquationComplex(
+            canvas,
+            context,
+            (x, y) => {
+                return Math.pow(x, 2) + Math.pow(y, 2);
+            },
+            (x, y) => {
+                return yr * Math.pow(1 + Math.sin(x * y), 2);
+            },
+            dims,
+        );
+    },
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('log(|x-y|+sin(xy))=sin(xy+log|x-y|)', title, {
+            throwOnError: false
+        });
+        let dims = [-10, -10, 10, 10]
+        drawEquationComplex(
+            canvas,
+            context,
+            (x, y) => {
+                return Math.log10(Math.abs(x - y) + Math.sin(x * y));
+            },
+            (x, y) => {
+                return Math.sin(x * y + Math.log10(Math.abs(x - y)));
+            },
+            dims,
+        );
+    },
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('\\sqrt{x}-\\sqrt{y}=sin(xy)', title, {
+            throwOnError: false
+        });
+        let dims = [0, 0, 20, 20]
+        drawEquationComplex(
+            canvas,
+            context,
+            (x, y) => {
+                return Math.sqrt(x) - Math.sqrt(y);
+            },
+            (x, y) => {
+                return Math.sin(x * y);
+            },
+            dims,
+        );
+    },
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('cos(xy-2^{xy})=sin(x+y)-tan(\\sqrt{xy})', title, {
+            throwOnError: false
+        });
+        let dims = [-10, -10, 20, 20]
+        drawEquationComplex(
+            canvas,
+            context,
+            (x, y) => {
+                return Math.cos(x * y - Math.pow(2, x * y));
+            },
+            (x, y) => {
+                return Math.sin(x + y) - Math.tan(Math.sqrt(x * y));
+            },
+            dims,
+        );
+    },
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('(cos(y))^{sin(x)}=\\sqrt{x-y}', title, {
+            throwOnError: false
+        });
+        let dims = [-20, -20, 20, 20]
+        drawEquationComplex(
+            canvas,
+            context,
+            (x, y) => {
+                return Math.pow(Math.cos(y), Math.sin(x));
+            },
+            (x, y) => {
+                return Math.sqrt(x - y);
+            },
+            dims,
+        );
+    },
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('xsin(y)=cos(y^x)', title, {
+            throwOnError: false
+        });
+        let dims = [-20, 0, 20, 20]
+        drawEquationComplex(
+            canvas,
+            context,
+            (x, y) => {
+                return x * Math.sin(y);
+            },
+            (x, y) => {
+                return Math.cos(Math.pow(y, x));
+            },
+            dims,
+        );
+    },
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('\\sqrt{xy}=8\\sqrt{sin(xy)}', title, {
+            throwOnError: false
+        });
+        let dims = [0, 0, 20, 20]
+        drawEquationComplex(
+            canvas,
+            context,
+            (x, y) => {
+                return Math.sqrt(x * y);
+            },
+            (x, y) => {
+                return 8 * Math.sqrt(Math.sin(x * y));
+            },
+            dims,
+        );
+    },
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('x^2-y^2=10sin(\\frac{x}{y})', title, {
+            throwOnError: false
+        });
+        let dims = [-4, -4, 4, 4]
+        drawEquationComplex(
+            canvas,
+            context,
+            (x, y) => {
+                return Math.pow(x, 2) - Math.pow(y, 2);
+            },
+            (x, y) => {
+                return 10 * Math.sin(x / y);
+            },
+            dims,
+        );
+    },
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('\\sqrt{x^4-y^4}=100sin(xy)', title, {
+            throwOnError: false
+        });
+        let dims = [-30, -30, 30, 30]
+        drawEquationComplex(
+            canvas,
+            context,
+            (x, y) => {
+                return Math.sqrt(Math.pow(x, 4) - Math.pow(y, 4));
+            },
+            (x, y) => {
+                return 100 * Math.sin(x * y);
+            },
+            dims,
+        );
+    },
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('5cos(5x)-5sin(5y)=xy', title, {
+            throwOnError: false
+        });
+        let dims = [-30, -30, 30, 30]
+        drawEquationComplex(
+            canvas,
+            context,
+            (x, y) => {
+                return 5 * Math.cos(5 * x) - 5 * Math.sin(5 * y);
+            },
+            (x, y) => {
+                return x * y;
+            },
+            dims,
+        );
+    },
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('300^{sin(x)}+300^{cos(y)}=xy', title, {
+            throwOnError: false
+        });
+        let dims = [-30, -30, 30, 30]
+        drawEquationComplex(
+            canvas,
+            context,
+            (x, y) => {
+                return Math.pow(300, Math.sin(x)) + Math.pow(300, Math.cos(y));
+            },
+            (x, y) => {
+                return x * y;
+            },
+            dims,
+        );
+    },
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('sin(\\frac{x}{4})-cos(\\frac{y}{4})=sin(cos(\\frac{xy}{4}))', title, {
+            throwOnError: false
+        });
+        let dims = [-30, -30, 30, 30]
+        drawEquationComplex(
+            canvas,
+            context,
+            (x, y) => {
+                return Math.sin(0.25 * x) - Math.cos(0.25 * y);
+            },
+            (x, y) => {
+                return Math.sin(Math.cos(0.25 * x * y));
+            },
+            dims,
+        );
+    },
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('y=sin(\\frac{1}{x})', title, {
+            throwOnError: false
+        });
+        let dims = [-2, -2, 2, 2]
+        drawEquation(
+            canvas,
+            context,
+            (x) => {
+                return Math.sin(1 / x);
+            },
+            dims,
+        );
+    },
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('y=tan(x^x)', title, {
+            throwOnError: false
+        });
+        let dims = [-10, -10, 10, 10]
+        drawEquation(
+            canvas,
+            context,
+            (x) => {
+                return Math.tan(Math.pow(x, x));
+            },
+            dims,
+        );
+    },
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('x+y=sin(cos(tan(cot(y)))', title, {
+            throwOnError: false
+        });
+        let dims = [-10, -10, 10, 10]
+        drawEquationComplex(
+            canvas,
+            context,
+            (x, y) => {
+                return x + y;
+            },
+            (x, y) => {
+                return Math.sin(Math.cos(Math.tan(1 / Math.tan(y))));
+            },
+            dims,
+        );
+    },
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('y=sin(e^{tan(ln(x))})', title, {
+            throwOnError: false
+        });
+        let dims = [0, -10, 100, 10]
+        drawEquationComplex(
+            canvas,
+            context,
+            (x, y) => {
+                return y;
+            },
+            (x, y) => {
+                return Math.sin(Math.pow(Math.E, Math.tan(Math.log(x))));
+            },
+            dims,
+        );
+    },
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('yx-2=sinh(x)*\\mod(y,2)', title, {
+            throwOnError: false
+        });
+        let dims = [-10, -10, 10, 40]
+        drawEquationComplex(
+            canvas,
+            context,
+            (x, y) => {
+                return y * x - 2;
+            },
+            (x, y) => {
+                return Math.sinh(x) * desmos_mod(y, 2);
+            },
+            dims,
+        );
+    },
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('sin(x^2+y^2)=(x+y)^2', title, {
+            throwOnError: false
+        });
+        let dims = [-10, -10, 10, 10]
+        drawEquationComplex(
+            canvas,
+            context,
+            (x, y) => {
+                return Math.sin(Math.pow(x, 2) + Math.pow(y, 2));
+            },
+            (x, y) => {
+                return Math.pow(x + y, 2);
+            },
+            dims,
+        );
+    },
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('-y^x<x^{|x^2|}', title, {
+            throwOnError: false
+        });
+        let dims = [-100000000, -50000000, 100000000, 100000000]
+        drawEquationInequality(
+            canvas,
+            context,
+            (x, y) => {
+                return Math.pow(x, Math.abs(Math.pow(x, 2)));
+            },
+            (x, y) => {
+                return -Math.pow(y, x);
+            },
+            dims,
+        );
+    },
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('x!=y!tan(xy)', title, {
+            throwOnError: false
+        });
+        let dims = [-10, -10, 10, 10]
+        drawEquationComplex(
+            canvas,
+            context,
+            (x, y) => {
+                return factorial(x);
+            },
+            (x, y) => {
+                return factorial(y) * Math.tan(x * y);
+            },
+            dims,
+        );
+    },
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('(x^2+cos(tan(y)))!=1', title, {
+            throwOnError: false
+        });
+        let dims = [-10, -10, 10, 10]
+        drawEquationComplex(
+            canvas,
+            context,
+            (x, y) => {
+                return factorial(Math.pow(x, 2) + Math.cos(Math.tan(y)));
+            },
+            (x, y) => {
+                return 1;
+            },
+            dims,
+        );
+    },
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('\\frac{cos(x^{tan(y)})}{sin(y^{tan(x)})}=\\frac{1}{2}', title, {
+            throwOnError: false
+        });
+        let dims = [0, 0, 10, 5]
+        drawEquationComplex(
+            canvas,
+            context,
+            (x, y) => {
+                return Math.cos(Math.pow(x, Math.tan(y))) / Math.sin(Math.pow(y, Math.tan(x)));
+            },
+            (x, y) => {
+                return 1 / 2;
+            },
+            dims,
+        );
+    },
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('y=-ln(cos(x!))', title, {
+            throwOnError: false
+        });
+        let dims = [-10, -10, 100, 50]
+        drawEquation(
+            canvas,
+            context,
+            (x) => {
+                return -Math.log(Math.cos(factorial(x)));
+            },
+            dims,
+        );
+    },
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('tan(xy)=69', title, {
+            throwOnError: false
+        });
+        let dims = [-10, -10, 100, 50]
+        drawEquationComplex(
+            canvas,
+            context,
+            (x, y) => {
+                return 69;
+            },
+            (x, y) => {
+                return Math.tan(x * y);
+            },
+            dims,
+        );
+    },
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('tan(e^y)=cos(e^x)', title, {
+            throwOnError: false
+        });
+        let dims = [-2000, -2000, 2000, 1500]
+        drawEquationComplex(
+            canvas,
+            context,
+            (x, y) => {
+                return Math.tan(Math.pow(Math.E, y));
+            },
+            (x, y) => {
+                return Math.cos(Math.pow(Math.E, x));
+            },
+            dims,
+        );
+    },
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('tan(xos(\\frac{x}{y}))=cot(ln(y^2))', title, {
+            throwOnError: false
+        });
+        let dims = [-100, -100, 100, 100]
+        drawEquationComplex(
+            canvas,
+            context,
+            (x, y) => {
+                return Math.tan(Math.cos(x / y));
+            },
+            (x, y) => {
+                return 1 / Math.tan(Math.log(Math.pow(y, 2)));
+            },
+            dims,
+        );
+    },
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('(x-sin(20x))^2+\\frac{fy^2}{7}=20', title, {
+            throwOnError: false
+        });
+        let dims = [-10, -10, 10, 10]
+        drawEquationComplex(
+            canvas,
+            context,
+            (x, y) => {
+                return Math.pow(x + Math.sin(20 * x), 2) + 5 * Math.pow(y, 2) / 7;
+            },
+            (x, y) => {
+                return 20;
+            },
+            dims,
+        );
+    },
 ];

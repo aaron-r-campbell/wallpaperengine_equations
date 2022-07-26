@@ -19,7 +19,7 @@ let getNewFunction = () => {
 }
 
 let storeToHistory = () => {
-    history.push(equation_queue.pop());
+    if(equation_queue[equation_queue.length-1] != null) history.push(equation_queue.pop());
     while (history.length > history_size) history.shift();
 }
 
@@ -63,7 +63,6 @@ window.onkeydown = (evt) => {
 
 let main = () => {
     drawNewFunction();
-    history = [];
     setInterval(timer, 60000);
 }
 
