@@ -9,7 +9,7 @@ let last_switch = 0;
 
 window.onresize = () => {
     resizeCanvas(main_canvas, canvas_orientation);
-    // drawFunction();
+    drawFunction();
 }
 
 let getNewFunction = () => {
