@@ -19,7 +19,7 @@ let getNewFunction = () => {
 }
 
 let storeToHistory = () => {
-    if(equation_queue[equation_queue.length-1] != null) history.push(equation_queue.pop());
+    if (equation_queue[equation_queue.length - 1] != null) history.push(equation_queue.pop());
     while (history.length > history_size) history.shift();
 }
 
@@ -32,7 +32,7 @@ let drawFunction = () => {
     clearContent(main_canvas, main_canvas_context, canvas_title);
     resizeCanvas(main_canvas, canvas_orientation);
     // Draw the new function
-    equation_queue[equation_queue.length - 1](main_canvas, main_canvas_context, canvas_title, currentColors.stroke_color);
+    draw_pixels(main_canvas, main_canvas_context, equation_queue[equation_queue.length - 1](main_canvas, main_canvas_context, canvas_title));
 }
 
 let drawNewFunction = () => {
