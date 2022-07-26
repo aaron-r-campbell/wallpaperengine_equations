@@ -12,26 +12,15 @@ body {
     background-color: var(--background_color);
 }
 
-#content_wrapper {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    -webkit-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-}
-
 #main_canvas {
     background-color: var(--canvas_color);
+    position: absolute;
+    top: var(--canvas_y_pos);
+    left: var(--canvas_x_pos);
 }
 
-#title {
-    margin-right: 0.618rem;
-    font-size: 1.1rem;
-    color: var(--font_color);
-}
-
-/* Fixing MathJax */
-mjx-container {
-    margin-right: 0;
-    text-align: right;
+#canvas_title {
+    position: absolute;
+    top: var(--title_y_pos);
+    right: var(--title_x_pos);
 }

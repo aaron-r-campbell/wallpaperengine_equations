@@ -3,7 +3,7 @@
 
 <head>
     <!-- Include styles -->
-    <!-- <link rel="stylesheet" type="text/css" href="styles/style.scss"> -->
+    <!-- <style href="./styles/style.scss"></style> -->
     <style>
         :root {
             --background_color: #FFFFFFFF;
@@ -19,32 +19,22 @@
             background-color: var(--background_color);
         }
 
-        #content_wrapper {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            -webkit-transform: translate(-50%, -50%);
-            transform: translate(-50%, -50%);
-        }
-
         #main_canvas {
             background-color: var(--canvas_color);
+            position: absolute;
+            top: var(--canvas_y_pos);
+            left: var(--canvas_x_pos);
         }
 
-        #title {
-            margin-right: 0.618rem;
-            font-size: 1.1rem;
-            color: var(--font_color);
-        }
-
-        /* Fixing MathJax */
-        mjx-container {
-            margin-right: 0;
-            text-align: right;
+        #canvas_title {
+            position: absolute;
+            top: var(--title_y_pos);
+            right: var(--title_x_pos);
         }
     </style>
-    <!-- Include MathJax for LaTeX rendering -->
-    <script src="scripts/mathjax.js"></script>
+    <!-- Include katex for LaTeX equation rendering -->
+    <link rel="stylesheet" href="./styles/katex.min.css">
+    <script src="./scripts/katex.min.js"></script>
     <!-- Include canvas_scene.js for overall theme setup -->
     <script type="text/javascript" src="scripts/canvas_scene.js"></script>
     <!-- Include math.js -->
@@ -52,19 +42,17 @@
 </head>
 
 <body>
-    <div id="content_wrapper">
-        <canvas id="main_canvas"></canvas>
-        <h1 id="title" class="title"></h1>
-    </div>
+    <canvas id="main_canvas"></canvas>
+    <span id="canvas_title"></span>
 </body>
 
 <footer>
     <!-- Quickly load the backdrop -->
     <script type="text/javascript">
-        // Define canvas and context
-        let c = document.getElementById('main_canvas');
-        let ctx = c.getContext('2d');
-        let t = document.getElementById('title');
+        // Define canvas, context, and title
+        let main_canvas = document.getElementById('main_canvas');
+        let main_canvas_context = main_canvas.getContext('2d');
+        let canvas_title = document.getElementById('canvas_title');
 
         // Define and set colors
         let currentColors = setColors();
@@ -73,79 +61,13 @@
         const canvas_orientation = 'auto';
 
         // Draw blank canvas
-        clearContent(c, ctx, t);
-        resizeCanvas(c, canvas_orientation);
-        ctx.save();
+        clearContent(main_canvas, main_canvas_context, canvas_title);
+        resizeCanvas(main_canvas, canvas_orientation);
+        // Save the context
+        main_canvas_context.save();
     </script>
     <!-- Main script execution -->
-    <script type="text/javascript">
-
-        // Other
-        let update_interval = 10;
-        let equation_queue = [];
-        let history = [];
-        let history_size = equations.length;
-        let currentFunction;
-        let monitor_count = 1;
-
-        window.onresize = () => {
-            resizeCanvas(c, canvas_orientation);
-            drawFunction();
-        }
-
-        let getNewFunction = () => {
-            storeToHistory();
-            if (equation_queue.length < monitor_count) equation_queue = equations.sort(() => Math.random() - 0.5).concat(equation_queue);
-            while (equation_queue.length > history_size * 2) equation_queue.shift();
-        }
-
-        let storeToHistory = () => {
-            history.push(equation_queue.pop());
-            while (history.length > history_size) history.shift();
-        }
-
-        let recoverHistory = () => {
-            if (history.length < monitor_count) history = equations.sort(() => Math.random() - 0.5).concat(history);
-            equation_queue.push(history.pop());
-        }
-
-        let drawFunction = () => {
-            clearContent(c, ctx, t);
-            resizeCanvas(c, canvas_orientation);
-            // Draw the new function
-            equation_queue[equation_queue.length - 1](c, ctx, currentColors.stroke_color);
-        }
-
-        let drawNewFunction = () => {
-            getNewFunction();
-            drawFunction();
-        }
-
-        window.onkeydown = (evt) => {
-            switch (evt.keyCode) {
-                case 112: // f1 (back)
-                    evt.preventDefault();
-                    recoverHistory();
-                    drawFunction();
-                    break;
-                case 113: // f2 (forward)
-                    evt.preventDefault();
-                    getNewFunction();
-                    drawFunction();
-                    break;
-                default:
-                    return;
-            }
-        };
-
-        let main = () => {
-            drawNewFunction();
-            history = [];
-            setInterval(drawNewFunction(), update_interval * 60 * 1000);
-        }
-
-        main();
-    </script>
+    <script type="text/javascript" src="scripts/main.js" async></script>
 </footer>
 
 </html>

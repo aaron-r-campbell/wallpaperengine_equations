@@ -126,9 +126,10 @@ let drawEquationInequality = (canvas, context, geq, leq, dims, color, radius = 0
 
 // Math graphs
 let equations = [
-    (canvas, context, color, radius = 0.5) => {
-        title.innerHTML = '$$x^y=y^x$$';
-        MathJax.typeset()
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('x^y=y^x', title, {
+            throwOnError: false
+        });
         drawEquationComplex(
             canvas,
             context,
@@ -143,9 +144,10 @@ let equations = [
             radius,
         );
     },
-    (canvas, context, color, radius = 0.5) => {
-        title.innerHTML = '$$y=e^{sin(x)}+x$$';
-        MathJax.typeset()
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('y=e^{sin(x)}+x', title, {
+            throwOnError: false
+        });
         for (let i = -11; i <= 11; i++) {
             drawEquation(
                 canvas,
@@ -157,9 +159,10 @@ let equations = [
             );
         }
     },
-    (canvas, context, color, radius = 0.5) => {
-        title.innerHTML = '$$y^3+x^3=x^2+y$$';
-        MathJax.typeset()
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('y^3+x^3=x^2+y', title, {
+            throwOnError: false
+        });
         drawEquationComplex(
             canvas,
             context,
@@ -174,9 +177,10 @@ let equations = [
             radius,
         );
     },
-    (canvas, context, color, radius = 0.5) => {
-        title.innerHTML = '$$y^9+x^7=x^5+y^3$$';
-        MathJax.typeset()
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('y^9+x^7=x^5+y^3', title, {
+            throwOnError: false
+        });
         drawEquationComplex(
             canvas,
             context,
@@ -191,9 +195,10 @@ let equations = [
             radius,
         );
     },
-    (canvas, context, color, radius = 0.5) => {
-        title.innerHTML = '$$y=cos(x^x)$$';
-        MathJax.typeset()
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('y=cos(x^x)', title, {
+            throwOnError: false
+        });
         drawEquation(
             canvas,
             context,
@@ -205,9 +210,10 @@ let equations = [
             radius,
         );
     },
-    (canvas, context, color, radius = 0.5) => {
-        title.innerHTML = '$$y=sin(x^{cos(y)})$$';
-        MathJax.typeset()
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('y=sin(x^{cos(y)})', title, {
+            throwOnError: false
+        });
         drawEquationComplex(
             canvas,
             context,
@@ -222,9 +228,10 @@ let equations = [
             radius,
         );
     },
-    (canvas, context, color, radius = 0.5) => {
-        title.innerHTML = '$$4^{ln(sin(y))}=tan|x|$$';
-        MathJax.typeset()
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('4^{ln(sin(y))}=tan|x|', title, {
+            throwOnError: false
+        });
         drawEquationComplex(
             canvas,
             context,
@@ -239,9 +246,10 @@ let equations = [
             radius,
         );
     },
-    (canvas, context, color, radius = 0.5) => {
-        title.innerHTML = '$$y< ln(sin(x))$$ ';
-        MathJax.typeset()
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('y< ln(sin(x))', title, {
+            throwOnError: false
+        });
         let dims = [-1, -20, 61, 1]
         drawEquationInequality(
             canvas,
@@ -257,9 +265,10 @@ let equations = [
             radius,
         );
     },
-    (canvas, context, color, radius = 0.5) => {
-        title.innerHTML = '$$sin(log(x^y))>0$$';
-        MathJax.typeset()
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('sin(log(x^y))>0', title, {
+            throwOnError: false
+        });
         let dims = [1, -20, 50, 20]
         drawEquationInequality(
             canvas,
@@ -275,9 +284,10 @@ let equations = [
             radius,
         );
     },
-    (canvas, context, color, radius = 0.5) => {
-        title.innerHTML = '$$ln(x^y)+cos(y^x)=1$$';
-        MathJax.typeset()
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('ln(x^y)+cos(y^x)=1', title, {
+            throwOnError: false
+        });
         let dims = [0, 0, 10, 10]
         drawEquationComplex(
             canvas,
@@ -293,9 +303,10 @@ let equations = [
             radius,
         );
     },
-    (canvas, context, color, radius = 0.5) => {
-        title.innerHTML = '$$y^{16}=\\frac{y^{x^2+y^2}}{ln(2^{x^2-y^2})}$$';
-        MathJax.typeset()
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('y^{16}=\\frac{y^{x^2+y^2}}{ln(2^{x^2-y^2})}', title, {
+            throwOnError: false
+        });
         let dims = [-6, -6, 6, 6]
         drawEquationComplex(
             canvas,
@@ -311,9 +322,10 @@ let equations = [
             radius,
         );
     },
-    (canvas, context, color, radius = 0.5) => {
-        title.innerHTML = '$$y=e^{cos(xy)}$$';
-        MathJax.typeset()
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('y=e^{cos(xy)}', title, {
+            throwOnError: false
+        });
         let dims = [-20, -20, 20, 20]
         drawEquationComplex(
             canvas,
@@ -329,9 +341,10 @@ let equations = [
             radius,
         );
     },
-    (canvas, context, color, radius = 0.5) => {
-        title.innerHTML = '$$7^{xsin(x)}+x^{7sin(y)}=yx^2+2^{xy^2}$$';
-        MathJax.typeset()
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('7^{xsin(x)}+x^{7sin(y)}=yx^2+2^{xy^2}', title, {
+            throwOnError: false
+        });
         let dims = [-1, -20, 70, 20]
         drawEquationComplex(
             canvas,
@@ -347,9 +360,10 @@ let equations = [
             radius,
         );
     },
-    (canvas, context, color, radius = 0.5) => {
-        title.innerHTML = '$$x^2+y^2=tan(e^x)+\\frac{|4^x|}{sin(y)}$$';
-        MathJax.typeset()
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('x^2+y^2=tan(e^x)+\\frac{|4^x|}{sin(y)}', title, {
+            throwOnError: false
+        });
         let dims = [-20, -20, 20, 20]
         drawEquationComplex(
             canvas,
@@ -365,9 +379,10 @@ let equations = [
             radius,
         );
     },
-    (canvas, context, color, radius = 0.5) => {
-        title.innerHTML = '$$y=|sin(xcos(x))|$$';
-        MathJax.typeset()
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('y=|sin(xcos(x))|', title, {
+            throwOnError: false
+        });
         let dims = [-20, -20, 20, 20]
         drawEquationComplex(
             canvas,
@@ -383,9 +398,10 @@ let equations = [
             radius,
         );
     },
-    (canvas, context, color, radius = 0.5) => {
-        title.innerHTML = '$$y=sin(x)^x+cos(y)^y$$';
-        MathJax.typeset()
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('y=sin(x)^x+cos(y)^y', title, {
+            throwOnError: false
+        });
         let dims = [-50, -10, 50, 50]
         drawEquationComplex(
             canvas,
@@ -401,9 +417,10 @@ let equations = [
             radius,
         );
     },
-    (canvas, context, color, radius = 0.5) => {
-        title.innerHTML = '$$y=cos(x^2)^{cos(x^x)}$$';
-        MathJax.typeset()
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('y=cos(x^2)^{cos(x^x)}', title, {
+            throwOnError: false
+        });
         let dims = [-10, 0, 100, 65]
         drawEquationComplex(
             canvas,
@@ -419,9 +436,10 @@ let equations = [
             radius,
         );
     },
-    (canvas, context, color, radius = 0.5) => {
-        title.innerHTML = '$$y=sec(x^2)+csc(x)$$';
-        MathJax.typeset()
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('y=sec(x^2)+csc(x)', title, {
+            throwOnError: false
+        });
         let dims = [-20, -20, 20, 20]
         drawEquationComplex(
             canvas,
@@ -437,9 +455,10 @@ let equations = [
             radius,
         );
     },
-    (canvas, context, color, radius = 0.5) => {
-        title.innerHTML = '$$x=\\sqrt{\\frac{tan(xy)}{4^y+x^4}}$$';
-        MathJax.typeset()
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('x=\\sqrt{\\frac{tan(xy)}{4^y+x^4}}', title, {
+            throwOnError: false
+        });
         let dims = [0, -3, 10, 3]
         drawEquationComplex(
             canvas,
@@ -455,9 +474,10 @@ let equations = [
             radius,
         );
     },
-    (canvas, context, color, radius = 0.5) => {
-        title.innerHTML = '$$y=cos(4^x+y^4)$$';
-        MathJax.typeset()
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('y=cos(4^x+y^4)', title, {
+            throwOnError: false
+        });
         let dims = [0, -3, 10, 3]
         drawEquationComplex(
             canvas,
@@ -473,9 +493,10 @@ let equations = [
             radius,
         );
     },
-    (canvas, context, color, radius = 0.5) => {
-        title.innerHTML = '$$tan(x^y)=sin(x^{cos(y)})$$';
-        MathJax.typeset()
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('tan(x^y)=sin(x^{cos(y)})', title, {
+            throwOnError: false
+        });
         let dims = [0, -20, 100, 20]
         drawEquationComplex(
             canvas,
@@ -491,9 +512,10 @@ let equations = [
             radius,
         );
     },
-    (canvas, context, color, radius = 0.5) => {
-        title.innerHTML = '$$sin(x^e)+cos(y^e)=1$$';
-        MathJax.typeset()
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('sin(x^e)+cos(y^e)=1', title, {
+            throwOnError: false
+        });
         let dims = [0, 0, 15, 15]
         drawEquationComplex(
             canvas,
@@ -509,9 +531,10 @@ let equations = [
             radius,
         );
     },
-    (canvas, context, color, radius = 0.5) => {
-        title.innerHTML = '$$tan(x^2+y^2)=1$$';
-        MathJax.typeset()
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('tan(x^2+y^2)=1', title, {
+            throwOnError: false
+        });
         let dims = [0, 0, 15, 15]
         drawEquationComplex(
             canvas,
@@ -527,9 +550,10 @@ let equations = [
             radius,
         );
     },
-    (canvas, context, color, radius = 0.5) => {
-        title.innerHTML = '$$x=tan(y^2)$$';
-        MathJax.typeset()
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('x=tan(y^2)', title, {
+            throwOnError: false
+        });
         let dims = [-30, -30, 30, 30]
         drawEquationComplex(
             canvas,
@@ -545,9 +569,10 @@ let equations = [
             radius,
         );
     },
-    (canvas, context, color, radius = 0.5) => {
-        title.innerHTML = '$$x^2\\leq265cos^{4}(y^3)ex\\mod(2)$$';
-        MathJax.typeset()
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('x^2\\leq265cos^{4}(y^3)ex\\mod(2)', title, {
+            throwOnError: false
+        });
         let dims = [-5, -5, 5, 5]
         drawEquationInequality(
             canvas,
@@ -576,9 +601,10 @@ let equations = [
             radius,
         );
     },
-    (canvas, context, color, radius = 0.5) => {
-        title.innerHTML = '$$tan(cot(x))$$';
-        MathJax.typeset()
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('tan(cot(x))', title, {
+            throwOnError: false
+        });
         let dims = [-20, -20, 20, 20]
         drawEquation(
             canvas,
@@ -591,9 +617,10 @@ let equations = [
             radius,
         );
     },
-    (canvas, context, color, radius = 0.5) => {
-        title.innerHTML = '$$\\frac{ln(cos(x))}{x}$$';
-        MathJax.typeset()
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('\\frac{ln(cos(x))}{x}', title, {
+            throwOnError: false
+        });
         let dims = [-20, -5, 20, 5]
         drawEquation(
             canvas,
@@ -606,9 +633,10 @@ let equations = [
             radius,
         );
     },
-    (canvas, context, color, radius = 0.5) => {
-        title.innerHTML = '$$cos(x)=sin(y)$$';
-        MathJax.typeset()
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('cos(x)=sin(y)', title, {
+            throwOnError: false
+        });
         let dims = [-20, -20, 20, 20]
         drawEquationComplex(
             canvas,
@@ -624,9 +652,10 @@ let equations = [
             radius,
         );
     },
-    (canvas, context, color, radius = 0.5) => {
-        title.innerHTML = '$$cos(x)=xy$$';
-        MathJax.typeset()
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('cos(x)=xy', title, {
+            throwOnError: false
+        });
         let dims = [-20, -3, 20, 3]
         drawEquationComplex(
             canvas,
@@ -642,9 +671,10 @@ let equations = [
             radius,
         );
     },
-    (canvas, context, color, radius = 0.5) => {
-        title.innerHTML = '$$y=xcos(x!)$$';
-        MathJax.typeset()
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('y=xcos(x!)', title, {
+            throwOnError: false
+        });
         let dims = [-10, -5, 10, 5]
         drawEquation(
             canvas,
@@ -657,9 +687,10 @@ let equations = [
             radius,
         );
     },
-    (canvas, context, color, radius = 0.5) => {
-        title.innerHTML = '$$cos(x)=xsin(y)$$';
-        MathJax.typeset()
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('cos(x)=xsin(y)', title, {
+            throwOnError: false
+        });
         let dims = [-20, -20, 20, 20]
         drawEquationComplex(
             canvas,
@@ -675,9 +706,10 @@ let equations = [
             radius,
         );
     },
-    (canvas, context, color, radius = 0.5) => {
-        title.innerHTML = '$$y=cosh(sin(x^2))$$';
-        MathJax.typeset()
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('y=cosh(sin(x^2))', title, {
+            throwOnError: false
+        });
         let dims = [-10, -10, 10, 10]
         drawEquation(
             canvas,
@@ -690,9 +722,10 @@ let equations = [
             radius,
         );
     },
-    (canvas, context, color, radius = 0.5) => {
-        title.innerHTML = '$$y=cosh(cot(xsin(x^2)))$$';
-        MathJax.typeset()
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('y=cosh(cot(xsin(x^2)))', title, {
+            throwOnError: false
+        });
         let dims = [-10, 0, 10, 30]
         drawEquationComplex(
             canvas,
@@ -708,9 +741,10 @@ let equations = [
             radius,
         );
     },
-    (canvas, context, color, radius = 0.5) => {
-        title.innerHTML = '$$x+y=sin(e^x)$$';
-        MathJax.typeset()
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('x+y=sin(e^x)', title, {
+            throwOnError: false
+        });
         let dims = [-10, -10, 10, 10]
         drawEquationComplex(
             canvas,
@@ -726,9 +760,10 @@ let equations = [
             radius,
         );
     },
-    (canvas, context, color, radius = 0.5) => {
-        title.innerHTML = '$$y=x(x\\mod2)$$';
-        MathJax.typeset()
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('y=x(x\\mod2)', title, {
+            throwOnError: false
+        });
         let dims = [-20, -20, 20, 20]
         drawEquationComplex(
             canvas,
@@ -744,10 +779,11 @@ let equations = [
             radius,
         );
     },
-    (canvas, context, color, radius = 0.5) => {
+    (canvas, context, title, color, radius = 0.5) => {
         let c = new Date().getFullYear();
-        title.innerHTML = '$$x^2+y^2=cos(x)+sin(y^{' + c + '})$$';
-        MathJax.typeset()
+        katex.render('x^2+y^2=cos(x)+sin(y^{' + c + '})', title, {
+            throwOnError: false
+        });
         let dims = [-2, -2, 2, 2]
         drawEquationComplex(
             canvas,
@@ -763,10 +799,11 @@ let equations = [
             radius,
         );
     },
-    (canvas, context, color, radius = 0.5) => {
+    (canvas, context, title, color, radius = 0.5) => {
         let c = 100 * (new Date().getMonth() + 1) + (new Date().getDate());
-        title.innerHTML = '$$x^2+y^2=cos(x)+sin(y^{' + c + '})$$';
-        MathJax.typeset()
+        katex.render('x^2+y^2=cos(x)+sin(y^{' + c + '})', title, {
+            throwOnError: false
+        });
         let dims = [-2, -2, 2, 2]
         drawEquationComplex(
             canvas,
@@ -782,9 +819,10 @@ let equations = [
             radius,
         );
     },
-    (canvas, context, color, radius = 0.5) => {
-        title.innerHTML = '$$xcos(x!+y)=1$$';
-        MathJax.typeset()
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('xcos(x!+y)=1', title, {
+            throwOnError: false
+        });
         let dims = [-20, -5, 20, 10]
         drawEquationComplex(
             canvas,
@@ -800,9 +838,10 @@ let equations = [
             radius,
         );
     },
-    (canvas, context, color, radius = 0.5) => {
-        title.innerHTML = '$$\\frac{1}{x^2}=x \\mod y$$';
-        MathJax.typeset()
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('\\frac{1}{x^2}=x \\mod y', title, {
+            throwOnError: false
+        });
         let dims = [-20, -5, 20, 10]
         drawEquationComplex(
             canvas,
@@ -818,9 +857,10 @@ let equations = [
             radius,
         );
     },
-    (canvas, context, color, radius = 0.5) => {
-        title.innerHTML = '$$x^{sin(y^2)}+y^{cos(x)}=1$$';
-        MathJax.typeset()
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('x^{sin(y^2)}+y^{cos(x)}=1', title, {
+            throwOnError: false
+        });
         let dims = [0, 0, 50, 40]
         drawEquationComplex(
             canvas,
@@ -836,9 +876,10 @@ let equations = [
             radius,
         );
     },
-    (canvas, context, color, radius = 0.5) => {
-        title.innerHTML = '$$y=tan(tan(tan(sin(x)))$$';
-        MathJax.typeset()
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('y=tan(tan(tan(sin(x)))', title, {
+            throwOnError: false
+        });
         let dims = [-50, -50, 50, 50]
         drawEquation(
             canvas,
@@ -851,9 +892,10 @@ let equations = [
             radius,
         );
     },
-    (canvas, context, color, radius = 0.5) => {
-        title.innerHTML = '$$|tan(cos(y)+sin(x^4))|=1$$';
-        MathJax.typeset()
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('|tan(cos(y)+sin(x^4))|=1', title, {
+            throwOnError: false
+        });
         let dims = [-10, -10, 10, 10]
         drawEquationComplex(
             canvas,
@@ -869,9 +911,10 @@ let equations = [
             radius,
         );
     },
-    (canvas, context, color, radius = 0.5) => {
-        title.innerHTML = '$$cos^4(xy(+cos(4^y))+sin(y)=\\frac{2}{5}x+\\frac{1}{10}y^2$$';
-        MathJax.typeset()
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('cos^4(xy(+cos(4^y))+sin(y)=\\frac{2}{5}x+\\frac{1}{10}y^2', title, {
+            throwOnError: false
+        });
         let dims = [-50, -20, 5, 20]
         drawEquationComplex(
             canvas,
@@ -887,9 +930,10 @@ let equations = [
             radius,
         );
     },
-    (canvas, context, color, radius = 0.5) => {
-        title.innerHTML = '$$xcos(tan(y)+x!)=1$$';
-        MathJax.typeset()
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('xcos(tan(y)+x!)=1', title, {
+            throwOnError: false
+        });
         let dims = [-20, -10, 20, 10]
         drawEquationComplex(
             canvas,
@@ -905,9 +949,10 @@ let equations = [
             radius,
         );
     },
-    (canvas, context, color, radius = 0.5) => {
-        title.innerHTML = '$$tan(x*y!)=1$$';
-        MathJax.typeset()
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('tan(x*y!)=1', title, {
+            throwOnError: false
+        });
         let dims = [-10, -10, 10, 10]
         drawEquationComplex(
             canvas,
@@ -923,9 +968,10 @@ let equations = [
             radius,
         );
     },
-    (canvas, context, color, radius = 0.5) => {
-        title.innerHTML = '$$sin^2(xy)=tan^2(xy)*cos^2(xy)$$';
-        MathJax.typeset()
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('sin^2(xy)=tan^2(xy)*cos^2(xy)', title, {
+            throwOnError: false
+        });
         let dims = [-10, -10, 10, 10]
         drawEquationComplex(
             canvas,
@@ -941,9 +987,10 @@ let equations = [
             radius,
         );
     },
-    (canvas, context, color, radius = 0.5) => {
-        title.innerHTML = '$$\\log(x,y)=\\log(y,x)$$';
-        MathJax.typeset()
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('\\log(x,y)=\\log(y,x)', title, {
+            throwOnError: false
+        });
         let dims = [0, 0, 10, 10]
         drawEquationComplex(
             canvas,
@@ -959,9 +1006,10 @@ let equations = [
             radius,
         );
     },
-    (canvas, context, color, radius = 0.5) => {
-        title.innerHTML = '$$sin(x)+cos(x)+tan(x)$$';
-        MathJax.typeset()
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('sin(x)+cos(x)+tan(x)', title, {
+            throwOnError: false
+        });
         let dims = [-20, -20, 20, 20]
         drawEquation(
             canvas,
@@ -974,9 +1022,10 @@ let equations = [
             radius,
         );
     },
-    (canvas, context, color, radius = 0.5) => {
-        title.innerHTML = '$$tan(x)=cos(y)$$';
-        MathJax.typeset()
+    (canvas, context, title, color, radius = 0.5) => {
+        katex.render('tan(x)=cos(y)', title, {
+            throwOnError: false
+        });
         let dims = [-10, -5, 10, 5]
         drawEquationComplex(
             canvas,

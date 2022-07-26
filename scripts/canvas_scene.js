@@ -70,6 +70,15 @@ let resizeCanvas = (canvas, orientation) => {
         default:
             console.log('Error, unknown type: ' + orientation);
     }
+    // Update vertical position
+    canvas.style.setProperty('--canvas_y_pos',(window.innerHeight-canvas.height)/2+'px');
+    canvas.style.setProperty('--canvas_x_pos',(window.innerWidth-canvas.width)/2+'px');
+    // Update label position
+    let title = document.getElementById('canvas_title');
+    let v_spacer = window.innerHeight/100*phi;
+    let h_spacer = window.innerWidth/100*phi;
+    title.style.setProperty('--title_y_pos',canvas.height+(window.innerHeight-canvas.height)/2+v_spacer+'px');
+    title.style.setProperty('--title_x_pos',(window.innerWidth-canvas.width)/2+h_spacer+'px');
 }
 
 let clearContent = (canvas, context, title) => {
