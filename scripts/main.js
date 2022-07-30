@@ -1,11 +1,9 @@
-// Other
+// Config
 let update_interval = 15;
-let equation_queue = [];
+let max_history_size = equations.length;
+// Other
+let upcoming = [];
 let history = [];
-let history_size = equations.length;
-let currentFunction;
-let monitor_count = 1;
-let last_switch = 0;
 
 window.onresize = () => {
     resizeCanvas(main_canvas, canvas_orientation);
@@ -14,25 +12,25 @@ window.onresize = () => {
 
 let getNewFunction = () => {
     storeToHistory();
-    if (equation_queue.length < monitor_count) equation_queue = equations.sort(() => Math.random() - 0.5).concat(equation_queue);
-    while (equation_queue.length > history_size * 2) equation_queue.shift();
+    if (upcoming.length < 1) upcoming = equations.sort(() => Math.random() - 0.5).concat(upcoming);
+    while (upcoming.length > max_history_size * 2) upcoming.shift();
 }
 
 let storeToHistory = () => {
-    if (equation_queue[equation_queue.length - 1] != null) history.push(equation_queue.pop());
-    while (history.length > history_size) history.shift();
+    if (upcoming[upcoming.length - 1] != null) history.push(upcoming.pop());
+    while (history.length > max_history_size) history.shift();
 }
 
 let recoverHistory = () => {
-    if (history.length < monitor_count) history = equations.sort(() => Math.random() - 0.5).concat(history);
-    equation_queue.push(history.pop());
+    if (history.length < 1) history = equations.sort(() => Math.random() - 0.5).concat(history);
+    upcoming.push(history.pop());
 }
 
 let drawFunction = async () => {
     clearContent(main_canvas, main_canvas_context, canvas_title);
     resizeCanvas(main_canvas, canvas_orientation);
     // Draw the new function
-    draw_pixels(main_canvas, main_canvas_context, await equation_queue[equation_queue.length - 1](main_canvas, main_canvas_context, canvas_title));
+    draw_pixels(main_canvas, main_canvas_context, upcoming[upcoming.length - 1](main_canvas, canvas_title));
 }
 
 let drawNewFunction = () => {

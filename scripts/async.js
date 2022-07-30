@@ -1,8 +1,9 @@
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
-    typeof define === 'function' && define.amd ? define(['exports'], factory) :
-    (factory((global.async = {})));
-}(this, (function (exports) { 'use strict';
+        typeof define === 'function' && define.amd ? define(['exports'], factory) :
+            (factory((global.async = {})));
+}(this, (function (exports) {
+    'use strict';
 
     /**
      * Creates a continuation function with some arguments already applied.
@@ -50,10 +51,10 @@
      * three
      */
     function apply(fn, ...args) {
-        return (...callArgs) => fn(...args,...callArgs);
+        return (...callArgs) => fn(...args, ...callArgs);
     }
 
-    function initialParams (fn) {
+    function initialParams(fn) {
         return function (...args/*, callback*/) {
             var callback = args.pop();
             return fn.call(this, args, callback);
@@ -204,9 +205,9 @@
 
     // conditionally promisify a function.
     // only return a promise if a callback is omitted
-    function awaitify (asyncFn, arity = asyncFn.length) {
+    function awaitify(asyncFn, arity = asyncFn.length) {
         if (!arity) throw new Error('arity is undefined')
-        function awaitable (...args) {
+        function awaitable(...args) {
             if (typeof args[arity - 1] === 'function') {
                 return asyncFn.apply(this, args)
             }
@@ -223,7 +224,7 @@
         return awaitable
     }
 
-    function applyEach (eachfn) {
+    function applyEach(eachfn) {
         return function applyEach(fns, ...callArgs) {
             const go = awaitify(function (callback) {
                 var that = this;
@@ -264,7 +265,7 @@
     const breakLoop = {};
 
     function once(fn) {
-        function wrapper (...args) {
+        function wrapper(...args) {
             if (fn === null) return;
             var callFn = fn;
             fn = null;
@@ -274,7 +275,7 @@
         return wrapper
     }
 
-    function getIterator (coll) {
+    function getIterator(coll) {
         return coll[Symbol.iterator] && coll[Symbol.iterator]();
     }
 
@@ -282,7 +283,7 @@
         var i = -1;
         var len = coll.length;
         return function next() {
-            return ++i < len ? {value: coll[i], key: i} : null;
+            return ++i < len ? { value: coll[i], key: i } : null;
         }
     }
 
@@ -293,7 +294,7 @@
             if (item.done)
                 return null;
             i++;
-            return {value: item.value, key: i};
+            return { value: item.value, key: i };
         }
     }
 
@@ -306,7 +307,7 @@
             if (key === '__proto__') {
                 return next();
             }
-            return i < len ? {value: obj[key], key} : null;
+            return i < len ? { value: obj[key], key } : null;
         };
     }
 
@@ -341,7 +342,7 @@
             if (running >= limit || awaiting || done) return
             //console.log('replenish awaiting')
             awaiting = true;
-            generator.next().then(({value, done: iterDone}) => {
+            generator.next().then(({ value, done: iterDone }) => {
                 //console.log('got value', value)
                 if (canceled || done) return
                 awaiting = false;
@@ -431,7 +432,7 @@
                 }
             }
 
-            function replenish () {
+            function replenish() {
                 looping = true;
                 while (running < limit && !done) {
                     var elem = nextElem();
@@ -484,7 +485,7 @@
         callback = once(callback);
         var index = 0,
             completed = 0,
-            {length} = coll,
+            { length } = coll,
             canceled = false;
         if (length === 0) {
             callback(null);
@@ -508,7 +509,7 @@
     }
 
     // a generic version of eachOf which can handle array, object, and iterator cases.
-    function eachOfGeneric (coll, iteratee, callback) {
+    function eachOfGeneric(coll, iteratee, callback) {
         return eachOfLimit$2(coll, Infinity, iteratee, callback);
     }
 
@@ -745,7 +746,7 @@
      * }
      *
      */
-    function map (coll, iteratee, callback) {
+    function map(coll, iteratee, callback) {
         return _asyncMap(eachOf$1, coll, iteratee, callback)
     }
     var map$1 = awaitify(map, 3);
@@ -833,7 +834,7 @@
      * transformed items from the `coll`. Invoked with (err, results).
      * @returns {Promise} a promise, if no callback is passed
      */
-    function mapSeries (coll, iteratee, callback) {
+    function mapSeries(coll, iteratee, callback) {
         return _asyncMap(eachOfSeries$1, coll, iteratee, callback)
     }
     var mapSeries$1 = awaitify(mapSeries, 3);
@@ -861,16 +862,16 @@
 
     const PROMISE_SYMBOL = Symbol('promiseCallback');
 
-    function promiseCallback () {
+    function promiseCallback() {
         let resolve, reject;
-        function callback (err, ...args) {
+        function callback(err, ...args) {
             if (err) return reject(err)
             resolve(args.length > 1 ? args : args[0]);
         }
 
         callback[PROMISE_SYMBOL] = new Promise((res, rej) => {
             resolve = res,
-            reject = rej;
+                reject = rej;
         });
 
         return callback
@@ -1096,7 +1097,7 @@
             if (readyTasks.length === 0 && runningTasks === 0) {
                 return callback(null, results);
             }
-            while(readyTasks.length && runningTasks < concurrency) {
+            while (readyTasks.length && runningTasks < concurrency) {
                 var run = readyTasks.shift();
                 run();
             }
@@ -1203,11 +1204,11 @@
         let index = 0;
         let endBlockComment = string.indexOf('*/');
         while (index < string.length) {
-            if (string[index] === '/' && string[index+1] === '/') {
+            if (string[index] === '/' && string[index + 1] === '/') {
                 // inline comment
                 let endIndex = string.indexOf('\n', index);
                 index = (endIndex === -1) ? string.length : endIndex;
-            } else if ((endBlockComment !== -1) && (string[index] === '/') && (string[index+1] === '*')) {
+            } else if ((endBlockComment !== -1) && (string[index] === '/') && (string[index + 1] === '*')) {
                 // block comment
                 let endIndex = string.indexOf('*/', index);
                 if (endIndex !== -1) {
@@ -1384,8 +1385,8 @@
             return node;
         }
 
-        empty () {
-            while(this.head) this.shift();
+        empty() {
+            while (this.head) this.shift();
             return this;
         }
 
@@ -1429,7 +1430,7 @@
             return [...this]
         }
 
-        *[Symbol.iterator] () {
+        *[Symbol.iterator]() {
             var cur = this.head;
             while (cur) {
                 yield cur.data;
@@ -1437,10 +1438,10 @@
             }
         }
 
-        remove (testFn) {
+        remove(testFn) {
             var curr = this.head;
-            while(curr) {
-                var {next} = curr;
+            while (curr) {
+                var { next } = curr;
                 if (testFn(curr)) {
                     this.removeLink(curr);
                 }
@@ -1459,7 +1460,7 @@
         if (concurrency == null) {
             concurrency = 1;
         }
-        else if(concurrency === 0) {
+        else if (concurrency === 0) {
             throw new RangeError('Concurrency must not be zero');
         }
 
@@ -1474,11 +1475,11 @@
             empty: []
         };
 
-        function on (event, handler) {
+        function on(event, handler) {
             events[event].push(handler);
         }
 
-        function once (event, handler) {
+        function once(event, handler) {
             const handleAndRemove = (...args) => {
                 off(event, handleAndRemove);
                 handler(...args);
@@ -1486,13 +1487,13 @@
             events[event].push(handleAndRemove);
         }
 
-        function off (event, handler) {
+        function off(event, handler) {
             if (!event) return Object.keys(events).forEach(ev => events[ev] = [])
             if (!handler) return events[event] = []
             events[event] = events[event].filter(ev => ev !== handler);
         }
 
-        function trigger (event, ...args) {
+        function trigger(event, ...args) {
             events[event].forEach(handler => handler(...args));
         }
 
@@ -1504,7 +1505,7 @@
             q.started = true;
 
             var res, rej;
-            function promiseCallback (err, ...args) {
+            function promiseCallback(err, ...args) {
                 // we don't care about the error, let the global error handler
                 // deal with it
                 if (err) return rejectOnError ? rej(err) : res()
@@ -1561,7 +1562,7 @@
                     }
                 }
 
-                if (numRunning <= (q.concurrency - q.buffer) ) {
+                if (numRunning <= (q.concurrency - q.buffer)) {
                     trigger('unsaturated');
                 }
 
@@ -1598,13 +1599,13 @@
         var isProcessing = false;
         var q = {
             _tasks: new DLL(),
-            _createTaskItem (data, callback) {
+            _createTaskItem(data, callback) {
                 return {
                     data,
                     callback
                 };
             },
-            *[Symbol.iterator] () {
+            *[Symbol.iterator]() {
                 yield* q._tasks[Symbol.iterator]();
             },
             concurrency,
@@ -1612,49 +1613,49 @@
             buffer: concurrency / 4,
             started: false,
             paused: false,
-            push (data, callback) {
+            push(data, callback) {
                 if (Array.isArray(data)) {
                     if (_maybeDrain(data)) return
                     return data.map(datum => _insert(datum, false, false, callback))
                 }
                 return _insert(data, false, false, callback);
             },
-            pushAsync (data, callback) {
+            pushAsync(data, callback) {
                 if (Array.isArray(data)) {
                     if (_maybeDrain(data)) return
                     return data.map(datum => _insert(datum, false, true, callback))
                 }
                 return _insert(data, false, true, callback);
             },
-            kill () {
+            kill() {
                 off();
                 q._tasks.empty();
             },
-            unshift (data, callback) {
+            unshift(data, callback) {
                 if (Array.isArray(data)) {
                     if (_maybeDrain(data)) return
                     return data.map(datum => _insert(datum, true, false, callback))
                 }
                 return _insert(data, true, false, callback);
             },
-            unshiftAsync (data, callback) {
+            unshiftAsync(data, callback) {
                 if (Array.isArray(data)) {
                     if (_maybeDrain(data)) return
                     return data.map(datum => _insert(datum, true, true, callback))
                 }
                 return _insert(data, true, true, callback);
             },
-            remove (testFn) {
+            remove(testFn) {
                 q._tasks.remove(testFn);
             },
-            process () {
+            process() {
                 // Avoid trying to start too many processing operations. This can occur
                 // when callbacks resolve synchronously (#1267).
                 if (isProcessing) {
                     return;
                 }
                 isProcessing = true;
-                while(!q.paused && numRunning < q.concurrency && q._tasks.length){
+                while (!q.paused && numRunning < q.concurrency && q._tasks.length) {
                     var tasks = [], data = [];
                     var l = q._tasks.length;
                     if (q.payload) l = Math.min(l, q.payload);
@@ -1680,22 +1681,22 @@
                 }
                 isProcessing = false;
             },
-            length () {
+            length() {
                 return q._tasks.length;
             },
-            running () {
+            running() {
                 return numRunning;
             },
-            workersList () {
+            workersList() {
                 return workersList;
             },
             idle() {
                 return q._tasks.length + numRunning === 0;
             },
-            pause () {
+            pause() {
                 q.paused = true;
             },
-            resume () {
+            resume() {
                 if (q.paused === false) { return; }
                 q.paused = false;
                 setImmediate$1(q.process);
@@ -2019,7 +2020,7 @@
                     iterCb(err, nextargs);
                 }));
             },
-            (err, results) => cb(err, ...results));
+                (err, results) => cb(err, ...results));
 
             return cb[PROMISE_SYMBOL]
         };
@@ -2087,7 +2088,7 @@
      * transformed items from the `coll`. Invoked with (err, results).
      * @returns {Promise} a promise, if no callback is passed
      */
-    function mapLimit (coll, limit, iteratee, callback) {
+    function mapLimit(coll, limit, iteratee, callback) {
         return _asyncMap(eachOfLimit(limit), coll, iteratee, callback)
     }
     var mapLimit$1 = awaitify(mapLimit, 4);
@@ -2580,7 +2581,7 @@
         const _test = wrapAsync(test);
         return doWhilst$1(iteratee, (...args) => {
             const cb = args.pop();
-            _test(...args, (err, truth) => cb (err, !truth));
+            _test(...args, (err, truth) => cb(err, !truth));
         }, callback);
     }
 
@@ -2972,7 +2973,7 @@
             iteratee(x, (err, v) => {
                 if (err) return iterCb(err);
                 if (v) {
-                    results.push({index, value: x});
+                    results.push({ index, value: x });
                 }
                 iterCb(err);
             });
@@ -3057,7 +3058,7 @@
      * }
      *
      */
-    function filter (coll, iteratee, callback) {
+    function filter(coll, iteratee, callback) {
         return _filter(eachOf$1, coll, iteratee, callback)
     }
     var filter$1 = awaitify(filter, 3);
@@ -3082,7 +3083,7 @@
      * `iteratee` functions have finished. Invoked with (err, results).
      * @returns {Promise} a promise, if no callback provided
      */
-    function filterLimit (coll, limit, iteratee, callback) {
+    function filterLimit(coll, limit, iteratee, callback) {
         return _filter(eachOfLimit(limit), coll, iteratee, callback)
     }
     var filterLimit$1 = awaitify(filterLimit, 4);
@@ -3105,7 +3106,7 @@
      * `iteratee` functions have finished. Invoked with (err, results)
      * @returns {Promise} a promise, if no callback provided
      */
-    function filterSeries (coll, iteratee, callback) {
+    function filterSeries(coll, iteratee, callback) {
         return _filter(eachOfSeries$1, coll, iteratee, callback)
     }
     var filterSeries$1 = awaitify(filterSeries, 3);
@@ -3179,17 +3180,17 @@
         return mapLimit$1(coll, limit, (val, iterCb) => {
             _iteratee(val, (err, key) => {
                 if (err) return iterCb(err);
-                return iterCb(err, {key, val});
+                return iterCb(err, { key, val });
             });
         }, (err, mapResults) => {
             var result = {};
             // from MDN, handle object having an `hasOwnProperty` prop
-            var {hasOwnProperty} = Object.prototype;
+            var { hasOwnProperty } = Object.prototype;
 
             for (var i = 0; i < mapResults.length; i++) {
                 if (mapResults[i]) {
-                    var {key} = mapResults[i];
-                    var {val} = mapResults[i];
+                    var { key } = mapResults[i];
+                    var { val } = mapResults[i];
 
                     if (hasOwnProperty.call(result, key)) {
                         result[key].push(val);
@@ -3296,7 +3297,7 @@
      * }
      *
      */
-    function groupBy (coll, iteratee, callback) {
+    function groupBy(coll, iteratee, callback) {
         return groupByLimit$1(coll, Infinity, iteratee, callback)
     }
 
@@ -3319,7 +3320,7 @@
      * properties are arrays of values which returned the corresponding key.
      * @returns {Promise} a promise, if no callback is passed
      */
-    function groupBySeries (coll, iteratee, callback) {
+    function groupBySeries(coll, iteratee, callback) {
         return groupByLimit$1(coll, 1, iteratee, callback)
     }
 
@@ -4010,7 +4011,7 @@
      *     console.log('finished processing bar');
      * });
      */
-    function queue$1 (worker, concurrency) {
+    function queue$1(worker, concurrency) {
         var _worker = wrapAsync(worker);
         return queue((items, cb) => {
             _worker(items[0], cb);
@@ -4029,7 +4030,7 @@
             return this.heap.length;
         }
 
-        empty () {
+        empty() {
             this.heap = [];
             return this;
         }
@@ -4037,7 +4038,7 @@
         percUp(index) {
             let p;
 
-            while (index > 0 && smaller(this.heap[index], this.heap[p=parent(index)])) {
+            while (index > 0 && smaller(this.heap[index], this.heap[p = parent(index)])) {
                 let t = this.heap[index];
                 this.heap[index] = this.heap[p];
                 this.heap[p] = t;
@@ -4049,9 +4050,9 @@
         percDown(index) {
             let l;
 
-            while ((l=leftChi(index)) < this.heap.length) {
-                if (l+1 < this.heap.length && smaller(this.heap[l+1], this.heap[l])) {
-                    l = l+1;
+            while ((l = leftChi(index)) < this.heap.length) {
+                if (l + 1 < this.heap.length && smaller(this.heap[l + 1], this.heap[l])) {
+                    l = l + 1;
                 }
 
                 if (smaller(this.heap[index], this.heap[l])) {
@@ -4069,7 +4070,7 @@
         push(node) {
             node.pushCount = ++this.pushCount;
             this.heap.push(node);
-            this.percUp(this.heap.length-1);
+            this.percUp(this.heap.length - 1);
         }
 
         unshift(node) {
@@ -4079,7 +4080,7 @@
         shift() {
             let [top] = this.heap;
 
-            this.heap[0] = this.heap[this.heap.length-1];
+            this.heap[0] = this.heap[this.heap.length - 1];
             this.heap.pop();
             this.percDown(0);
 
@@ -4090,13 +4091,13 @@
             return [...this];
         }
 
-        *[Symbol.iterator] () {
+        *[Symbol.iterator]() {
             for (let i = 0; i < this.heap.length; i++) {
                 yield this.heap[i].data;
             }
         }
 
-        remove (testFn) {
+        remove(testFn) {
             let j = 0;
             for (let i = 0; i < this.heap.length; i++) {
                 if (!testFn(this.heap[i])) {
@@ -4107,7 +4108,7 @@
 
             this.heap.splice(j);
 
-            for (let i = parent(this.heap.length-1); i >= 0; i--) {
+            for (let i = parent(this.heap.length - 1); i >= 0; i--) {
                 this.percDown(i);
             }
 
@@ -4116,11 +4117,11 @@
     }
 
     function leftChi(i) {
-        return (i<<1)+1;
+        return (i << 1) + 1;
     }
 
     function parent(i) {
-        return ((i+1)>>1)-1;
+        return ((i + 1) >> 1) - 1;
     }
 
     function smaller(x, y) {
@@ -4167,7 +4168,7 @@
         } = q;
 
         q._tasks = new Heap();
-        q._createTaskItem = ({data, priority}, callback) => {
+        q._createTaskItem = ({ data, priority }, callback) => {
             return {
                 data,
                 priority,
@@ -4177,17 +4178,17 @@
 
         function createDataItems(tasks, priority) {
             if (!Array.isArray(tasks)) {
-                return {data: tasks, priority};
+                return { data: tasks, priority };
             }
-            return tasks.map(data => { return {data, priority}; });
+            return tasks.map(data => { return { data, priority }; });
         }
 
         // Override push to accept second parameter representing priority
-        q.push = function(data, priority = 0, callback) {
+        q.push = function (data, priority = 0, callback) {
             return push(createDataItems(data, priority), callback);
         };
 
-        q.pushAsync = function(data, priority = 0, callback) {
+        q.pushAsync = function (data, priority = 0, callback) {
             return pushAsync(createDataItems(data, priority), callback);
         };
 
@@ -4268,7 +4269,7 @@
      * (err, result).
      * @returns {Promise} a promise, if no callback is passed
      */
-    function reduceRight (array, memo, iteratee, callback) {
+    function reduceRight(array, memo, iteratee, callback) {
         var reversed = [...array].reverse();
         return reduce$1(reversed, memo, iteratee, callback);
     }
@@ -4320,7 +4321,7 @@
                 if (error) {
                     retVal.error = error;
                 }
-                if (cbArgs.length > 0){
+                if (cbArgs.length > 0) {
                     var value = cbArgs;
                     if (cbArgs.length <= 1) {
                         [value] = cbArgs;
@@ -4485,7 +4486,7 @@
      * }
      *
      */
-    function reject$1 (coll, iteratee, callback) {
+    function reject$1(coll, iteratee, callback) {
         return reject(eachOf$1, coll, iteratee, callback)
     }
     var reject$2 = awaitify(reject$1, 3);
@@ -4510,7 +4511,7 @@
      * `iteratee` functions have finished. Invoked with (err, results).
      * @returns {Promise} a promise, if no callback is passed
      */
-    function rejectLimit (coll, limit, iteratee, callback) {
+    function rejectLimit(coll, limit, iteratee, callback) {
         return reject(eachOfLimit(limit), coll, iteratee, callback)
     }
     var rejectLimit$1 = awaitify(rejectLimit, 4);
@@ -4533,7 +4534,7 @@
      * `iteratee` functions have finished. Invoked with (err, results).
      * @returns {Promise} a promise, if no callback is passed
      */
-    function rejectSeries (coll, iteratee, callback) {
+    function rejectSeries(coll, iteratee, callback) {
         return reject(eachOfSeries$1, coll, iteratee, callback)
     }
     var rejectSeries$1 = awaitify(rejectSeries, 3);
@@ -4715,7 +4716,7 @@
      *     })]
      * }, callback);
      */
-    function retryable (opts, task) {
+    function retryable(opts, task) {
         if (!task) {
             task = opts;
             opts = null;
@@ -5215,12 +5216,12 @@
      * }
      *
      */
-    function sortBy (coll, iteratee, callback) {
+    function sortBy(coll, iteratee, callback) {
         var _iteratee = wrapAsync(iteratee);
         return map$1(coll, (x, iterCb) => {
             _iteratee(x, (err, criteria) => {
                 if (err) return iterCb(err);
-                iterCb(err, {value: x, criteria});
+                iterCb(err, { value: x, criteria });
             });
         }, (err, results) => {
             if (err) return callback(err);
@@ -5284,7 +5285,7 @@
 
             function timeoutCallback() {
                 var name = asyncFn.name || 'anonymous';
-                var error  = new Error('Callback function "' + name + '" timed out.');
+                var error = new Error('Callback function "' + name + '" timed out.');
                 error.code = 'ETIMEDOUT';
                 if (info) {
                     error.info = info;
@@ -5369,7 +5370,7 @@
      *     // we should now have 5 users
      * });
      */
-    function times (n, iteratee, callback) {
+    function times(n, iteratee, callback) {
         return timesLimit(n, Infinity, iteratee, callback)
     }
 
@@ -5388,7 +5389,7 @@
      * @param {Function} callback - see {@link module:Collections.map}.
      * @returns {Promise} a promise, if no callback is provided
      */
-    function timesSeries (n, iteratee, callback) {
+    function timesSeries(n, iteratee, callback) {
         return timesLimit(n, 1, iteratee, callback)
     }
 
@@ -5527,7 +5528,7 @@
      * }
      *
      */
-    function transform (coll, accumulator, iteratee, callback) {
+    function transform(coll, accumulator, iteratee, callback) {
         if (arguments.length <= 3 && typeof accumulator === 'function') {
             callback = iteratee;
             iteratee = accumulator;
@@ -5718,7 +5719,7 @@
      */
     function until(test, iteratee, callback) {
         const _test = wrapAsync(test);
-        return whilst$1((cb) => _test((err, truth) => cb (err, !truth)), iteratee, callback);
+        return whilst$1((cb) => _test((err, truth) => cb(err, !truth)), iteratee, callback);
     }
 
     /**
@@ -5778,7 +5779,7 @@
      *     callback(null, 'done');
      * }
      */
-    function waterfall (tasks, callback) {
+    function waterfall(tasks, callback) {
         callback = once(callback);
         if (!Array.isArray(tasks)) return callback(new Error('First argument to waterfall must be an array of functions'));
         if (!tasks.length) return callback();

@@ -1,22 +1,18 @@
 // Light mode default values
 const default_light = {
-    background_color: '#F5F5F7FF',
-    canvas_color: '#FFFFFFFF',
-    stroke_color: '#000000FF',
-    shadow_color: '#00000022',
-    font_color: '#000000FF',
-    fill_color: '#000000CC',
-    box_shadow: 'var(--shadow_color) 0px 0.1rem 1rem, var(--shadow_color) 0px 0.5rem 1rem',
+    background_color: '#F3F3F3FF',
+    canvas_color: '#FBFBFBFF',
+    stroke_color: '#5D5D5DFF',
+    font_color: '#2A2A2AFF',
+    fill_color: '#2A2A2ACC',
 }
 // Dark mode default values
 const default_dark = {
-    background_color: '#1f1f1fFF',
-    canvas_color: '#282828FF',
-    stroke_color: '#F5F5F7FF',
-    shadow_color: '#FFFFFF22',
-    font_color: '#F5F5F7AA',
-    fill_color: '#F5F5F7CC',
-    box_shadow: 'var(--shadow_color) 0 0 0, var(--shadow_color) 0 0 0',
+    background_color: '#202020FF',
+    canvas_color: '#2B2B2BFF',
+    stroke_color: '#FBFBFBFF',
+    font_color: '#FEFEFEAA',
+    fill_color: '#A0A0A0CC',
 }
 
 let setColors = (colors = default_light) => {
@@ -25,7 +21,7 @@ let setColors = (colors = default_light) => {
     style.setProperty('--canvas_color', colors.canvas_color)
     style.setProperty('--shadow_color', colors.shadow_color)
     style.setProperty('--font_color', colors.font_color)
-    document.querySelector('canvas').style["boxShadow"] = colors.box_shadow;
+    // document.querySelector('canvas').style["boxShadow"] = colors.box_shadow;
     return colors;
 }
 

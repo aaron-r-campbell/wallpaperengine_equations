@@ -3,7 +3,7 @@
 
 <head>
     <!-- Include styles -->
-    <!-- <style href="./styles/style.scss"></style> -->
+    <!-- <style href='./styles/style.scss'></style> -->
     <style>
         :root {
             --background_color: #FFFFFFFF;
@@ -20,39 +20,70 @@
         }
 
         #main_canvas {
+            z-index: 1;
             background-color: var(--canvas_color);
             position: absolute;
             top: var(--canvas_y_pos);
             left: var(--canvas_x_pos);
+            box-shadow: #2a2a2a22 0px 0.1rem 1rem, #2a2a2a22 0px 0.5rem 1rem;
         }
 
         #canvas_title {
+            z-index: 1;
             position: absolute;
             top: var(--title_y_pos);
             right: var(--title_x_pos);
         }
+
+        #calculator {
+            width: 61.8vw;
+            height: 61.8vh;
+            left: 50%;
+            top: 50%;
+            -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+        }
+
+        .calculator_util {
+            position: absolute;
+            display: none;
+            z-index: 10;
+        }
+
+        .katex {
+            font-size: 1.1618em;
+            color: var(--font_color);
+        }
     </style>
+    <!-- Include jquery -->
+    <script type='text/javascript' src='./scripts/jquery-3.6.0.min.js'> </script>
+    <!-- Include desmos -->
+    <script src='./scripts/calculator.js'></script>
     <!-- Include katex for LaTeX equation rendering -->
-    <link rel="stylesheet" href="./styles/katex.min.css">
-    <script src="./scripts/katex.min.js"></script>
-    <script type="text/javascript" src="./scripts/async.js"></script>
+    <link rel='stylesheet' href='./styles/katex.min.css'>
+    <script src='./scripts/katex.min.js'></script>
     <!-- Include canvas_scene.js for overall theme setup -->
-    <script type="text/javascript" src="scripts/canvas_scene.js"></script>
+    <script type='text/javascript' src='scripts/canvas_scene.js'></script>
     <!-- Include math.js -->
-    <script type="text/javascript" src="scripts/math.js"></script>
+    <script type='text/javascript' src='scripts/math.js'></script>
 </head>
 
 <body>
-    <canvas id="main_canvas"></canvas>
-    <span id="canvas_title"></span>
+    <div class='calculator_util' style='width:100vw;height:100vh;background-color: #00000088;'>
+        <div id='calculator' class='calculator_util' onclick='event.stopPropagation()'></div>
+    </div>
+    <canvas id='main_canvas'></canvas>
+    <span id='canvas_title' onclick='open_desmos()'></span>
 </body>
 
 <footer>
     <!-- Quickly load the backdrop -->
-    <script type="text/javascript">
-        // Define canvas, context, and title
+    <script type='text/javascript'>
+        // Define canvas and context
         let main_canvas = document.getElementById('main_canvas');
         let main_canvas_context = main_canvas.getContext('2d');
+
+        // Define title and link wrapper
         let canvas_title = document.getElementById('canvas_title');
 
         // Define and set colors
@@ -67,8 +98,24 @@
         // Save the context
         main_canvas_context.save();
     </script>
+    <script>
+        let elk = document.getElementById('calculator');
+        let calculator = Desmos.GraphingCalculator(elk);
+
+        window.onclick = function (event) {
+            if (event.target != calculator) {
+                $('.calculator_util').fadeOut(300);
+            }
+        }
+
+        let open_desmos = () => {
+            calculator.setExpression({ id: 'graph1', latex: canvas_title.getAttribute('label') });
+            $('.calculator_util').fadeIn(300, function () { $(this).focus(); });
+            event.stopPropagation();
+        }
+    </script>
     <!-- Main script execution -->
-    <script type="text/javascript" src="scripts/main.js" async></script>
+    <script type='text/javascript' src='scripts/main.js' async></script>
 </footer>
 
 </html>
