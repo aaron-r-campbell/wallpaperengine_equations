@@ -68,13 +68,28 @@ let calculate_equation = (canvas, { eq1 = (x, y) => x, eq2 = (x, y) => y, bounds
         let i = pixel_index % x_samples,
             j = Math.floor(pixel_index / x_samples);
         // get value 0-1
-        let value = [
+        let [tl,tr,bl,br] = [ // tl, tr, bl, br
             point_array[points_width * j + i],
             point_array[points_width * j + (i + 1)],
             point_array[points_width * (j + 1) + i],
             point_array[points_width * (j + 1) + (i + 1)]
-        ].filter(x => x >= 0).length;
-        if (value > 0) pixel_array.push({ pixel_index, value });
+        ]
+
+        // New method (percentage covered)
+        let fancyWidth = phi/4;
+        let value = Math.abs(Math.sqrt(tl)+Math.sqrt(tr)+Math.sqrt(bl)+Math.sqrt(br));
+        // if (value <= fancyWidth) pixel_array.push({pixel_index,value: 1-value/fancyWidth});
+
+        // New method 2 (linear approximation and estimation of closeness)
+        // horizontal
+        let slope = Math.abs((tl+bl-tr+br)/2/sample_width);
+        let thing = Math.max(Math.abs(tl),Math.abs(tr))/slope;
+        if (thing <= fancyWidth) pixel_array.push({pixel_index,value:thing/fancyWidth});
+
+        // old return
+        // let pixel_bounds = [tl,tr,bl,br];
+        // let orig_value = pixel_bounds.filter(x => x >= 0).length;
+        // if (orig_value > 0) pixel_array.push({ pixel_index, value: orig_value });
     };
 
     return {
@@ -87,17 +102,21 @@ let draw_pixels = (canvas, context, { pixels, inequality = false }, { stroke_col
     let imgdata = context.createImageData(canvas.width, canvas.height);
     for (let i = 0; i < pixels.length; i++) {
         let { pixel_index, value } = pixels[i];
-        if (inequality) {
-            imgdata.data[4 * Math.floor(pixel_index)] += fill_color.r;
-            imgdata.data[4 * Math.floor(pixel_index) + 1] += fill_color.g;
-            imgdata.data[4 * Math.floor(pixel_index) + 2] += fill_color.b;
-            imgdata.data[4 * Math.floor(pixel_index) + 3] += fill_color.a * (value == 2 ? 1 : 0.4);
-        } else if (value != 0 && value != 4) {
-            imgdata.data[4 * Math.floor(pixel_index)] += stroke_color.r;
-            imgdata.data[4 * Math.floor(pixel_index) + 1] += stroke_color.g;
-            imgdata.data[4 * Math.floor(pixel_index) + 2] += stroke_color.b;
-            imgdata.data[4 * Math.floor(pixel_index) + 3] += stroke_color.a * (value == 2 ? 1 : 0.4);
-        }
+        imgdata.data[4 * Math.floor(pixel_index)] += stroke_color.r;
+        imgdata.data[4 * Math.floor(pixel_index) + 1] += stroke_color.g;
+        imgdata.data[4 * Math.floor(pixel_index) + 2] += stroke_color.b;
+        imgdata.data[4 * Math.floor(pixel_index) + 3] += stroke_color.a *value;
+        // if (inequality) {
+        //     imgdata.data[4 * Math.floor(pixel_index)] += fill_color.r;
+        //     imgdata.data[4 * Math.floor(pixel_index) + 1] += fill_color.g;
+        //     imgdata.data[4 * Math.floor(pixel_index) + 2] += fill_color.b;
+        //     imgdata.data[4 * Math.floor(pixel_index) + 3] += fill_color.a * (value == 2 ? 1 : 0.4);
+        // } else if (value != 0 && value != 4) {
+        //     imgdata.data[4 * Math.floor(pixel_index)] += stroke_color.r;
+        //     imgdata.data[4 * Math.floor(pixel_index) + 1] += stroke_color.g;
+        //     imgdata.data[4 * Math.floor(pixel_index) + 2] += stroke_color.b;
+        //     imgdata.data[4 * Math.floor(pixel_index) + 3] += stroke_color.a * (value == 2 ? 1 : 0.4);
+        // }
     }
     context.putImageData(imgdata, 0, 0);
 };

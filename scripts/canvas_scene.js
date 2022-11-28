@@ -9,7 +9,7 @@ const default_light = {
 // Dark mode default values
 const default_dark = {
     background_color: '#202020FF',
-    canvas_color: '#2B2B2BFF',
+    canvas_color: '#191919FF',
     stroke_color: '#FBFBFBFF',
     font_color: '#FEFEFEAA',
     fill_color: '#A0A0A0CC',
